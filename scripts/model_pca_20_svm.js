@@ -23,7 +23,7 @@ for(var i in pModel.path.normal) {
 
 var overlay_vertices = new Float32Array(150);
 var overlay_uvs = new Float32Array(150);
-var overlay_indices = new Uint16Array([71,72,74,73,71]);
+var overlay_indices = new Uint16Array([0,7,14]);
 index = 0;
 
 
