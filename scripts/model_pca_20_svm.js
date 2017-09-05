@@ -1,6 +1,7 @@
 var app = new PIXI.Application({
     'width' : 840,
-    'height' : 1120
+    'height' : 1120,
+    'transparent' : true
 });
 document.body.appendChild(app.view);
 
@@ -17,13 +18,13 @@ for(var i in pModel.path.normal) {
         var p = pModel.shapeModel.meanShape[n];
         console.log(p);
 
-        line.lineTo(p[0]*ratio-25, p[1]*ratio+220);
+        // line.lineTo(p[0]*ratio-25, p[1]*ratio+220);
     }
 }
 
-var overlay_vertices = new Float32Array(150);
-var overlay_uvs = new Float32Array(150);
-var overlay_indices = new Uint16Array([0,7,14]);
+var overlay_vertices = new Float32Array(8);
+var overlay_uvs = new Float32Array(8);
+var overlay_indices = new Uint16Array([0,2,1,3]);
 index = 0;
 
 
@@ -36,32 +37,23 @@ for(var i in pModel.path.normal) {
         var p = pModel.shapeModel.meanShape[n];
         console.log(p);
         line.beginFill(0xff0022);
-        line.drawCircle(p[0]*ratio-25, p[1]*ratio+220,10);
+        line.drawCircle(p[0]*ratio-25, p[1]*ratio+220,3);
         line.endFill();
     }
 }
-
-    for(var i in pModel.shapeModel.meanShape){
-        p = pModel.shapeModel.meanShape[i];
-        overlay_uvs[index] = ((p[1]*ratio+220)/1120);
-        overlay_vertices[index++] = p[1]*ratio+220;
-        overlay_uvs[index] = ((p[0]*ratio-25)/840);
-        overlay_vertices[index++] = p[0]*ratio-25;
-    }
-
 //to render all image
 
 overlay_uvs[index] = 0;
 overlay_vertices[index++] = 0;
 overlay_uvs[index] = 0;
 overlay_vertices[index++] = 0;
-overlay_uvs[index] = 0;
+overlay_uvs[index] = 1;
 overlay_vertices[index++] = 840;
-overlay_uvs[index] = 1;
-overlay_vertices[index++] = 0;
-overlay_uvs[index] = 1;
+overlay_uvs[index] = 0;
 overlay_vertices[index++] = 0;
 overlay_uvs[index] = 0;
+overlay_vertices[index++] = 0;
+overlay_uvs[index] = 1;
 overlay_vertices[index++] = 1120;
 overlay_uvs[index] = 1;
 overlay_vertices[index++] = 840;
@@ -69,7 +61,7 @@ overlay_uvs[index] = 1;
 overlay_vertices[index++] = 1120;
 
 
-var overlay = new PIXI.mesh.Mesh(PIXI.Texture.fromImage('imgs/old2.png'), overlay_vertices, overlay_uvs, overlay_indices);
+var overlay = new PIXI.mesh.Mesh(PIXI.Texture.fromImage('imgs/old3.png'), overlay_vertices, overlay_uvs, overlay_indices);
 
 
 // console.log(overlay.vertices);

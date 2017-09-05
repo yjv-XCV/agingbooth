@@ -1,7 +1,7 @@
 var app = new PIXI.Application({
     'width' : 840,
     'height' : 1120,
-    'transparent' : true
+    // 'transparent' : true
 });
 document.body.appendChild(app.view);
 
@@ -12,6 +12,8 @@ var uvs = new Float32Array(84);
 var index = 0;
 
 uvs = new Float32Array([
+
+    //for old2.png
     0.17857142857142858, 0.2357142857142857,
     0.2357142857142857, 0.15803571428571428,
     0.42142857142857143, 0.11678571428571428,
@@ -79,15 +81,58 @@ for (var i = 0; i < 7; i++) {
         // vrtcs[index++] = i * 1120/6;
     }
 }
+var plane001;
 
 console.log(vrtcs);
+function overlays(){
+    function vrtcsp(index, x, y){
+        for(var i in index){
+            // vrtcs[index[i]*2] = x[i];
+            // vrtcs[index[i]*2+1] = y[i];
+        }
+    }
 
-var plane001 = new PIXI.mesh.Mesh(PIXI.Texture.fromImage('imgs/old2.png'), vrtcs , uvs, new Uint16Array([0,6,1,7,2,8,3,9,4,10,5,11,11,17,11,16,10,15,9,14,8,13,7,12,6,12,12,18,13,19,14,20,15,21,16,22,17,23,23,29,23,28,22,27,21,26,20,25,19,24,18,24,24,30,25,31,26,32,27,33,28,34,29,35,35,41,35,40,34,39,33,38,32,37,31,36,30]));
+    //forehead
+    indexes = [0, 1, 2, 3, 4, 5];
+    // xs = [tcs[0][0],tcs[19][0],tcs[22][0],tcs[18][0],tcs[15][0],tcs[14][0]];
+    // ys = [tcs[0][1] - (tcs[1][1] - tcs[0][1]), tcs[19][1] - (tcs[1][1] - tcs[19][1]), tcs[21][1] - (tcs[1][1] - tcs[21][1]), tcs[17][1] - (tcs[13][1] - tcs[17][1]), tcs[15][1] - (tcs[13][1] - tcs[15][1]),tcs[14][1] - (tcs[13][1] - tcs[14][1])];
+    // vrtcsp(indexes, xs, ys);
 
-plane001.x = 0;
-plane001.y = 0;
+    //jaws
+    indexes = [6, 12, 18, 24, 30, 36, 37, 38, 39, 40, 41, 35, 29, 23, 17, 11];
+    // xs = [tcs[0][0],tcs[1][0],tcs[2][0],tcs[3][0],tcs[4][0],tcs[5][0],tcs[6][0],tcs[7][0],tcs[7][0],tcs[8][0],tcs[9][0],tcs[10][0],tcs[11][0],tcs[12][0],tcs[13][0],tcs[14][0]];
+    // ys = [tcs[0][1],tcs[1][1],tcs[2][1],tcs[3][1],tcs[4][1],tcs[5][1],tcs[6][1],tcs[7][1],tcs[7][1],tcs[8][1],tcs[9][1],tcs[10][1],tcs[11][1],tcs[12][1],tcs[13][1],tcs[14][1]];
+    // vrtcsp(indexes, xs, ys);
+    //right eyes
+    indexes = [7, 8, 13, 14];
+    // xs = [tcs[23][0],tcs[25][0],tcs[23][0],tcs[25][0]];
+    // ys = [tcs[24][1],tcs[24][1],tcs[26][1],tcs[26][1]];
+    // vrtcsp(indexes, xs, ys);
 
-// app.stage.addChild(plane001);
+    //left eyes
+    indexes = [9, 10, 15, 16];
+    // xs = [tcs[30][0],tcs[28][0],tcs[30][0],tcs[28][0]];
+    // ys = [tcs[29][1],tcs[29][1],tcs[31][1],tcs[31][1]];
+    // vrtcsp(indexes, xs, ys);
+
+    //cheek nose
+    indexes = [19, 20, 21, 22];
+    // xs = [tcs[5][0],tcs[35][0],tcs[39][0],tcs[9][0]];
+    // ys = [tcs[35][1],tcs[35][1],tcs[39][1],tcs[39][1]];
+    // vrtcsp(indexes, xs, ys);
+
+    //mouth
+    indexes = [25, 26, 27, 28, 31, 32, 33, 34];
+    // xs = [tcs[44][0],tcs[46][0],tcs[48][0],tcs[50][0],tcs[44][0],tcs[46][0],tcs[48][0],tcs[50][0]];
+    // ys = [tcs[46][1],tcs[46][1],tcs[48][1],tcs[48][1],tcs[53][1],tcs[53][1],tcs[53][1],tcs[53][1]];
+    // vrtcsp(indexes, xs, ys);
+
+    plane001 = new PIXI.mesh.Mesh(PIXI.Texture.fromImage('imgs/old2.png'), vrtcs , uvs, new Uint16Array([0,6,1,7,2,8,3,9,4,10,5,11,11,17,11,16,10,15,9,14,8,13,7,12,6,12,12,18,13,19,14,20,15,21,16,22,17,23,23,29,23,28,22,27,21,26,20,25,19,24,18,24,24,30,25,31,26,32,27,33,28,34,29,35,35,41,35,40,34,39,33,38,32,37,31,36,30]));
+    plane001.alpha = 0.5;
+    plane001.x = 0;
+    plane001.y = 0;
+
+    app.stage.addChild(plane001);
 
 var g = new PIXI.Graphics();
 g.x = plane001.x;
@@ -113,7 +158,8 @@ function renderPoints () {
         }
     }
 }
-// renderPoints();
+renderPoints();
+}
 
 $(function() {
 
@@ -123,5 +169,7 @@ $(function() {
     });
 
 });
+
+overlays();
 
 

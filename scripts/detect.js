@@ -1,5 +1,5 @@
 var ctracker;
-var tracked_coord;
+var tcs;
 $(function(){
   var image_cc = $('#image')[0].getContext('2d');
   var overlay_cc = $('#overlay')[0].getContext('2d');
@@ -70,7 +70,7 @@ $(function(){
   document.addEventListener("clmtrackrConverged", function(event) {
     // alert('Converged!');
     console.log('ctracker.getCurrentPosition()');
-    console.log(tracked_coord = ctracker.getCurrentPosition());
+    console.log(tcs = ctracker.getCurrentPosition());
     console.log('ctracker.getCurrentParameters()');
     console.log(ctracker.getCurrentParameters());
     console.log('ctracker.getScore()');
@@ -83,8 +83,8 @@ $(function(){
   // update stats on iteration
   document.addEventListener("clmtrackrIteration", function(event) {
     // stats.update();
-    console.log(tracked_coord = ctracker.getCurrentPosition());
-    
+    console.log(tcs = ctracker.getCurrentPosition());
+
   }, false);
 
 
