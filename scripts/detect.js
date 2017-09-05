@@ -1,5 +1,5 @@
 var ctracker;
-
+var tracked_coord;
 $(function(){
   var image_cc = $('#image')[0].getContext('2d');
   var overlay_cc = $('#overlay')[0].getContext('2d');
@@ -10,7 +10,7 @@ $(function(){
    */
   var image_img = new Image();
   $(image_img).load(function() {
-    image_cc.drawImage(image_img, -60, -10, image_img.width*0.8, image_img.height*0.8);
+    image_cc.drawImage(image_img, 0, 0, 840, 1120);
   });
   image_img.src = 'samples/001.jpeg';
 
@@ -24,7 +24,9 @@ $(function(){
   {
     // console.log(t);
     requestAnimFrame(drawLoop);
+    overlay_cc.clearRect(0,0,840, 1120);
     ctracker.draw($('#overlay')[0]);
+
   }
 
 
@@ -34,16 +36,18 @@ $(function(){
     // ctracker.start($('#image')[0]);
 
     // DRAW RECT
-    var box = [129, 137, 372-129, 422-137]
+    // var box = [240, 270, 550-240, 545-270];
+    var box = [200, 100, 400, 500];
+
     overlay_cc.rect(box[0], box[1], box[2], box[3]);
-    overlay_cc.stroke();
+    // overlay_cc.stroke();
 
     // TRACK RECT
     ctracker.start($('#image')[0], box);
 
 
     // DRAW LOOP
-    requestAnimFrame(drawLoop);
+    // requestAnimFrame(drawLoop);
   });
   $('#overlay').click(function(e) {
     zz.cs.getCursorPosition($('#image')[0], e);
@@ -51,34 +55,39 @@ $(function(){
 
 
   // detect if tracker fails to find a face
-  document.addEventListener("clmtrackrNotFound", function(event) {
-    ctracker.stop();
-    alert("The tracking had problems with finding a face in this image. Try selecting the face in the image manually.")
-  }, false);
+  // document.addEventListener("clmtrackrNotFound", function(event) {
+  //   ctracker.stop();
+  //   alert("The tracking had problems with finding a face in this image. Try selecting the face in the image manually.")
+  // }, false);
 
   // detect if tracker loses tracking of face
-  document.addEventListener("clmtrackrLost", function(event) {
-    ctracker.stop();
-    alert("The tracking had problems converging on a face in this image. Try selecting the face in the image manually.")
-  }, false);
+  // document.addEventListener("clmtrackrLost", function(event) {
+  //   ctracker.stop();
+  //   alert("The tracking had problems converging on a face in this image. Try selecting the face in the image manually.")
+  // }, false);
 
   // detect if tracker has converged
   document.addEventListener("clmtrackrConverged", function(event) {
-    alert('Converged!');
+    // alert('Converged!');
     console.log('ctracker.getCurrentPosition()');
-    console.log(ctracker.getCurrentPosition());
+    console.log(tracked_coord = ctracker.getCurrentPosition());
     console.log('ctracker.getCurrentParameters()');
     console.log(ctracker.getCurrentParameters());
     console.log('ctracker.getScore()');
     console.log(ctracker.getScore());
+
     // stop drawloop
-    cancelRequestAnimFrame(drawRequest);
+    // cancelRequestAnimFrame(drawRequest);
   }, false);
 
   // update stats on iteration
   document.addEventListener("clmtrackrIteration", function(event) {
     // stats.update();
+    console.log(tracked_coord = ctracker.getCurrentPosition());
+    
   }, false);
+
+
 
 });
 
